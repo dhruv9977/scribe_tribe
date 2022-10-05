@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:scribetribe/components/constants/colors.dart';
-import 'package:scribetribe/screens/scribe/scribe_details/scribe_details.dart';
+import 'package:scribetribe/screens/tribe/tribe_details/tribe_details.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
           Theme.of(context).textTheme,
         ),
       ),
-      home: const ScribeDetails(),
+      home: const TribeDetails(),
 // routing
       // initialRoute: RouteHelper.initial,
       // getPages: RouteHelper.routes,
