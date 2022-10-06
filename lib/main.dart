@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:scribetribe/components/constants/colors.dart';
+import 'package:scribetribe/components/helpers/dependencies.dart';
 import 'package:scribetribe/screens/tribe/tribe_details/tribe_details.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await init();
   runApp(const MyApp());
 }
 
@@ -18,6 +21,8 @@ class MyApp extends StatelessWidget {
         appBarTheme: const AppBarTheme(
           backgroundColor: AppColors.kPrimaryColor,
         ),
+        // primarySwatch:
+        //     MaterialColor(0xff4E0ADD, {0xff4E0ADD: AppColors.kPrimaryColor}),
         scaffoldBackgroundColor: Colors.white,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         textTheme: GoogleFonts.interTextTheme(
