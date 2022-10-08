@@ -1,7 +1,11 @@
 {
-    "name": "Dhruv Patel",
-    "age": 19,
-    "destination": "Ranip",
-    "date": "October 30th, 2022",
-    "requirement": "Gujarati"
+    "data": [
+        {
+            "name": "Dhruv Patel",
+            "age": 19,
+            "destination": "Ranip",
+            "date": "October 30th, 2022",
+            "requirement": "Gujarati"
+        }
+    ]
 }

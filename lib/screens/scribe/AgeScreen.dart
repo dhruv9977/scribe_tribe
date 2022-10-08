@@ -65,7 +65,7 @@ class _AgeScreenState extends State<AgeScreen> {
     SizeConfig().init(context);
     return SafeArea(
       child: GestureDetector(
-       onLongPress: () {
+        onLongPress: () {
           speak();
         },
         onDoubleTap: () {
@@ -109,7 +109,8 @@ class _AgeScreenState extends State<AgeScreen> {
                     height: 51,
                     onPressed: () {
                       Get.toNamed(
-                          RouteHelper.getStudentExamScreen(),);
+                        RouteHelper.getStudentExamScreen(),
+                      );
                     },
                   ),
                 ],

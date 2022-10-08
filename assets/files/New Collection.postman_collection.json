@@ -1,0 +1,150 @@
+{
+	"info": {
+		"_postman_id": "ab0304f3-e3c7-484f-b256-c02959263fe2",
+		"name": "New Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17752812"
+	},
+	"item": [
+		{
+			"name": "Blind-person",
+			"item": [
+				{
+					"name": "register blind folk",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mobile\":\"9537446911\",\r\n    \"name\":\"Harsh\",\r\n    \"age\":35,\r\n    \"examname\":\"MSE\",\r\n    \"subjectname\":\"English\",\r\n    \"examlanguage\":\"Gujarati\",\r\n    \"examdate\":\"2022-10-10\",\r\n    \"examtime\":\"5:00pm\",\r\n    \"examduration\":2,\r\n    \"examcity\":\"rajkot\",\r\n    \"examarea\":\"naranpura\",\r\n    \"commuteToWriter\":true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/blind-folk-register",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"blind-folk-register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "writer-register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"writername\":\"kuch nahi\",\r\n    \"writerage\":65,\r\n    \"writercity\":\"manhattan\",\r\n    \"writerarea\":\"goragaon\",\r\n    \"location\":[45.6789,56.345],\r\n    \"writerlanguage\":[\"marati\"],\r\n    \"writerlanguageInExam\":[\"gujarati\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/writer-register",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"writer-register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get the blink folks",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"examcity\":\"manhattan\",\r\n    \"examarea\":\"goragaon\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/blind-folk",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"blind-folk"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select-folk",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"folkId\":\"63406f1bbcfd731cb00a8bc2\",\r\n    \"writerId\":\"6340738884c213021839538c\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/select-folk",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"select-folk"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-writer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/api/show-writer-list/63406f1bbcfd731cb00a8bc2",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"show-writer-list",
+								"63406f1bbcfd731cb00a8bc2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -4,6 +4,7 @@ import 'package:scribetribe/components/constants/route_helper.dart';
 import 'package:scribetribe/components/constants/size_config.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:scribetribe/components/widgets/text_form_field.dart';
+import 'package:scribetribe/controllers/studet_details_controller.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import '../../../../components/constants/colors.dart';
 import '../../../../components/widgets/app_name_widgets.dart';
@@ -19,10 +20,11 @@ class NameScreen extends StatefulWidget {
 
 class _NameScreenState extends State<NameScreen> {
   final FlutterTts flutterTts = FlutterTts();
-  final TextEditingController textEditingController = TextEditingController();
   late stt.SpeechToText _speech;
   // bool _isListening = false;
   double _confidence = 1.0;
+    final controller = Get.find<StudentDetailsController>();
+
 
   @override
   void initState() {
@@ -48,7 +50,7 @@ class _NameScreenState extends State<NameScreen> {
 
     await _speech.listen(
       onResult: (val) => setState(() {
-        textEditingController.text = val.recognizedWords;
+        controller.nameController.value.text = val.recognizedWords;
         if (val.hasConfidenceRating && val.confidence > 0) {
           _confidence = val.confidence;
         }
@@ -90,7 +92,7 @@ class _NameScreenState extends State<NameScreen> {
                   ),
                   buildSizeHeight(height: 57),
                   buildTextFormField(
-                    controller: textEditingController,
+                    controller: controller.nameController.value,
                     keyboardType: TextInputType.text,
                     hintText: '',
                     errorText: '',
