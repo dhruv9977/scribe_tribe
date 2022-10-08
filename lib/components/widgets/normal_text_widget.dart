@@ -9,6 +9,7 @@ Text buildText({
 }) {
   return Text(
     text,
+    textAlign: TextAlign.center,
     style: TextStyle(
       color: color,
       fontWeight: fontWeight,

@@ -15,7 +15,8 @@ class RegistrationFields extends StatelessWidget {
     final controller = Get.find<TribeDetailsController>();
 
     return SingleChildScrollView(
-      child: Expanded(
+      child: Form(
+        key: controller.formKey,
         child: Column(
           children: [
             buildTextFormField(

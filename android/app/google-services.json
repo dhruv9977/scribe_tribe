@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "466326087511",
+    "project_id": "scribetribe-c1e19",
+    "storage_bucket": "scribetribe-c1e19.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:466326087511:android:59ced2a1b25311e9bd0012",
+        "android_client_info": {
+          "package_name": "com.example.scribetribe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "466326087511-26vtp1jl5q5aj6l2urtuu2h52t9g7kcv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANXaysmkAZ-JBXiJYydotfCWUrdLuUMQE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "466326087511-26vtp1jl5q5aj6l2urtuu2h52t9g7kcv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -9,8 +9,10 @@ class TribeDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return const Scaffold(
-      body: Body(),
+    return const SafeArea(
+      child:  Scaffold(
+        body: Body(),
+      ),
     );
   }
 }
