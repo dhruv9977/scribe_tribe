@@ -11,16 +11,15 @@ import '../../../components/widgets/rounded_buttons.dart';
 import '../../../components/widgets/text_form_field.dart';
 import '../../controllers/studen_exam_details.dart';
 
-class ExamType extends StatefulWidget {
-  const ExamType({Key? key}) : super(key: key);
+class VenueName extends StatefulWidget {
+  const VenueName({Key? key}) : super(key: key);
 
   @override
-  State<ExamType> createState() => _ExamTypeState();
+  State<VenueName> createState() => _VenueNameState();
 }
 
-class _ExamTypeState extends State<ExamType> {
+class _VenueNameState extends State<VenueName> {
   final FlutterTts flutterTts = FlutterTts();
-  // final TextEditingController textEditingController = TextEditingController();
   late stt.SpeechToText _speech;
   // bool _isListening = false;
   double _confidence = 1.0;
@@ -38,7 +37,7 @@ class _ExamTypeState extends State<ExamType> {
     await flutterTts.setVolume(1.0);
     await flutterTts.setPitch(0.4);
     await flutterTts.speak(
-      "Please Tell us Your Exam Name like english or hindi",
+      "Please Tell us your exam Venue Name",
     );
     await flutterTts.awaitSpeakCompletion(true);
     await flutterTts.stop();
@@ -50,7 +49,7 @@ class _ExamTypeState extends State<ExamType> {
 
     await _speech.listen(
       onResult: (val) => setState(() {
-        controller.examLanguageController.value.text = val.recognizedWords;
+        controller.venueNameController.value.text = val.recognizedWords;
         if (val.hasConfidenceRating && val.confidence > 0) {
           _confidence = val.confidence;
         }
@@ -85,14 +84,14 @@ class _ExamTypeState extends State<ExamType> {
                   Center(child: appNameWidget()),
                   buildSizeHeight(height: 147),
                   buildText(
-                    text: 'Enter Name of Exam',
+                    text: 'Enter Venue Name of Exam',
                     color: Colors.black,
                     txtSize: 24,
                     fontWeight: FontWeight.w700,
                   ),
                   buildSizeHeight(height: 57),
                   buildTextFormField(
-                    controller: controller.examLanguageController.value,
+                    controller: controller.venueNameController.value,
                     keyboardType: TextInputType.text,
                     hintText: '',
                     errorText: '',
@@ -110,9 +109,7 @@ class _ExamTypeState extends State<ExamType> {
                     width: double.infinity,
                     height: 51,
                     onPressed: () {
-                      Get.toNamed(
-                        RouteHelper.getStudentSubjectScreen(),
-                      );
+                      controller.postDetails(context);
                     },
                   ),
                 ],

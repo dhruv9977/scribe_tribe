@@ -9,6 +9,8 @@ import '../../../../components/widgets/normal_text_widget.dart';
 import '../../../components/widgets/rounded_buttons.dart';
 import '../../../components/widgets/text_form_field.dart';
 import '../../components/constants/route_helper.dart';
+import '../../controllers/studen_exam_details.dart';
+import '../../controllers/studet_details_controller.dart';
 
 class Language extends StatefulWidget {
   const Language({Key? key}) : super(key: key);
@@ -23,6 +25,7 @@ class _LanguageState extends State<Language> {
   late stt.SpeechToText _speech;
   // bool _isListening = false;
   double _confidence = 1.0;
+  final controller = Get.find<StudentDetailsController>();
 
   @override
   void initState() {
@@ -36,7 +39,7 @@ class _LanguageState extends State<Language> {
     await flutterTts.setVolume(1.0);
     await flutterTts.setPitch(0.4);
     await flutterTts.speak(
-      "Please Tell us your exam language",
+      "Please Tell us your prefeered language",
     );
     await flutterTts.awaitSpeakCompletion(true);
     await flutterTts.stop();
@@ -48,7 +51,7 @@ class _LanguageState extends State<Language> {
 
     await _speech.listen(
       onResult: (val) => setState(() {
-        textEditingController.text = val.recognizedWords;
+        controller.languageController.value.text = val.recognizedWords;
         if (val.hasConfidenceRating && val.confidence > 0) {
           _confidence = val.confidence;
         }
@@ -72,45 +75,48 @@ class _LanguageState extends State<Language> {
           _speech.isNotListening ? _listen() : _stopListener();
         },
         child: Scaffold(
-          body: SafeArea(
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: getProportionateScreenWidth(26)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Center(child: appNameWidget()),
-                  buildSizeHeight(height: 147),
-                  buildText(
-                    text: 'Enter Language of Exam',
-                    color: Colors.black,
-                    txtSize: 24,
-                    fontWeight: FontWeight.w700,
-                  ),
-                  buildSizeHeight(height: 57),
-                  buildTextFormField(
-                    controller: textEditingController,
-                    keyboardType: TextInputType.text,
-                    hintText: '',
-                    errorText: '',
-                    isSuffixIconVisible: true,
-                    suffixIcon:
-                        _speech.isNotListening ? Icons.mic_none : Icons.mic,
-                    onIconPressed: () {
-                      _speech.isNotListening ? _listen() : _stopListener();
-                    },
-                  ),
-                  buildSizeHeight(height: 65),
-                  RoundedButton(
+          body: SingleChildScrollView(
+            child: SafeArea(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: getProportionateScreenWidth(26)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Center(child: appNameWidget()),
+                    buildSizeHeight(height: 147),
+                    buildText(
+                      text: 'Enter Language of Exam',
+                      color: Colors.black,
+                      txtSize: 24,
+                      fontWeight: FontWeight.w700,
+                    ),
+                    buildSizeHeight(height: 57),
+                    buildTextFormField(
+                      controller: controller.languageController.value,
+                      keyboardType: TextInputType.text,
+                      hintText: 'Enter the language',
+                      errorText: 'Please enter the language',
+                      isSuffixIconVisible: true,
+                      suffixIcon:
+                          _speech.isNotListening ? Icons.mic_none : Icons.mic,
+                      onIconPressed: () {
+                        _speech.isNotListening ? _listen() : _stopListener();
+                      },
+                    ),
+                    buildSizeHeight(height: 65),
+                    RoundedButton(
                       text: "Next",
                       btnColor: AppColors.kPrimaryColor,
                       width: double.infinity,
                       height: 51,
                       onPressed: () {
-                        Get.toNamed(RouteHelper.getStudentDateScreen());
-                      }, ),
-                ],
+                        Get.toNamed(RouteHelper.getStudentExamCityScreen());
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

@@ -60,7 +60,7 @@ class MainScreen extends StatelessWidget {
           case ConnectionState.done:
             final user = AuthService.firebase().currentUser;
             if (user != null) {
-              if (UrlConstants.isStudent.isBool) {
+              if (UrlConstants.isStudent.isBool == true) {
                 return const StudentHomeScreen();
               } else {
                 return const HomeScreen();
@@ -69,7 +69,9 @@ class MainScreen extends StatelessWidget {
               return const IntroScreen();
             }
           default:
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
         }
       },
     );

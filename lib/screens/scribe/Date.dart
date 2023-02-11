@@ -9,6 +9,7 @@ import '../../../../components/widgets/normal_text_widget.dart';
 import '../../../components/widgets/rounded_buttons.dart';
 import '../../../components/widgets/text_form_field.dart';
 import '../../components/constants/route_helper.dart';
+import '../../controllers/studen_exam_details.dart';
 
 class Date extends StatefulWidget {
   const Date({Key? key}) : super(key: key);
@@ -19,10 +20,11 @@ class Date extends StatefulWidget {
 
 class _DateState extends State<Date> {
   final FlutterTts flutterTts = FlutterTts();
-  final TextEditingController textEditingController = TextEditingController();
+  // final TextEditingController textEditingController = TextEditingController();
   late stt.SpeechToText _speech;
   // bool _isListening = false;
   double _confidence = 1.0;
+  final controller = Get.find<StudentExamDetailsController>();
 
   @override
   void initState() {
@@ -36,8 +38,7 @@ class _DateState extends State<Date> {
     await flutterTts.setVolume(1.0);
     await flutterTts.setPitch(0.4);
     await flutterTts.speak(
-   "   Please Tell us your exam date in format of dd - m m - y y y y"
-    );
+        "   Please Tell us your exam date in format of dd - m m - y y y y");
     await flutterTts.awaitSpeakCompletion(true);
     await flutterTts.stop();
     _speech.isNotListening ? _listen() : _stopListener();
@@ -48,7 +49,7 @@ class _DateState extends State<Date> {
 
     await _speech.listen(
       onResult: (val) => setState(() {
-        textEditingController.text = val.recognizedWords;
+        controller.examDateController.value.text = val.recognizedWords;
         if (val.hasConfidenceRating && val.confidence > 0) {
           _confidence = val.confidence;
         }
@@ -90,7 +91,7 @@ class _DateState extends State<Date> {
                   ),
                   buildSizeHeight(height: 57),
                   buildTextFormField(
-                    controller: textEditingController,
+                    controller: controller.examDateController.value,
                     keyboardType: TextInputType.text,
                     hintText: '',
                     errorText: '',

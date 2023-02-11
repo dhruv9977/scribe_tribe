@@ -9,6 +9,7 @@ import '../../../../components/widgets/app_name_widgets.dart';
 import '../../../../components/widgets/normal_text_widget.dart';
 import '../../../components/widgets/rounded_buttons.dart';
 import '../../../components/widgets/text_form_field.dart';
+import '../../controllers/studen_exam_details.dart';
 
 class DurationScreen extends StatefulWidget {
   const DurationScreen({Key? key}) : super(key: key);
@@ -19,10 +20,11 @@ class DurationScreen extends StatefulWidget {
 
 class _DurationScreenState extends State<DurationScreen> {
   final FlutterTts flutterTts = FlutterTts();
-  final TextEditingController textEditingController = TextEditingController();
+  // final TextEditingController textEditingController = TextEditingController();
   late stt.SpeechToText _speech;
   // bool _isListening = false;
   double _confidence = 1.0;
+  final controller = Get.find<StudentExamDetailsController>();
 
   @override
   void initState() {
@@ -48,7 +50,7 @@ class _DurationScreenState extends State<DurationScreen> {
 
     await _speech.listen(
       onResult: (val) => setState(() {
-        textEditingController.text = val.recognizedWords;
+        controller.examDurationController.value.text = val.recognizedWords;
         if (val.hasConfidenceRating && val.confidence > 0) {
           _confidence = val.confidence;
         }
@@ -90,7 +92,7 @@ class _DurationScreenState extends State<DurationScreen> {
                   ),
                   buildSizeHeight(height: 57),
                   buildTextFormField(
-                    controller: textEditingController,
+                    controller: controller.examDurationController.value,
                     keyboardType: TextInputType.text,
                     hintText: '',
                     errorText: '',
@@ -103,13 +105,14 @@ class _DurationScreenState extends State<DurationScreen> {
                   ),
                   buildSizeHeight(height: 65),
                   RoundedButton(
-                      text: "Next",
-                      btnColor: AppColors.kPrimaryColor,
-                      width: double.infinity,
-                      height: 51,
-                      onPressed: () {
-                        Get.toNamed(RouteHelper.getStudentExamCityScreen());
-                      }),
+                    text: "Next",
+                    btnColor: AppColors.kPrimaryColor,
+                    width: double.infinity,
+                    height: 51,
+                    onPressed: () {
+                      Get.toNamed(RouteHelper.getStudentExamCityScreen());
+                    },
+                  ),
                 ],
               ),
             ),

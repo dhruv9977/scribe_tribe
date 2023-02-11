@@ -9,6 +9,7 @@ import '../../../../components/widgets/app_name_widgets.dart';
 import '../../../../components/widgets/normal_text_widget.dart';
 import '../../../components/widgets/rounded_buttons.dart';
 import '../../../components/widgets/text_form_field.dart';
+import '../../controllers/studen_exam_details.dart';
 
 class ExamCity extends StatefulWidget {
   const ExamCity({Key? key}) : super(key: key);
@@ -19,10 +20,11 @@ class ExamCity extends StatefulWidget {
 
 class _ExamCityState extends State<ExamCity> {
   final FlutterTts flutterTts = FlutterTts();
-  final TextEditingController textEditingController = TextEditingController();
+  // final TextEditingController textEditingController = TextEditingController();
   late stt.SpeechToText _speech;
   // bool _isListening = false;
   double _confidence = 1.0;
+  final controller = Get.find<StudentExamDetailsController>();
 
   @override
   void initState() {
@@ -48,7 +50,7 @@ class _ExamCityState extends State<ExamCity> {
 
     await _speech.listen(
       onResult: (val) => setState(() {
-        textEditingController.text = val.recognizedWords;
+        controller.examCityController.value.text = val.recognizedWords;
         if (val.hasConfidenceRating && val.confidence > 0) {
           _confidence = val.confidence;
         }
@@ -90,7 +92,7 @@ class _ExamCityState extends State<ExamCity> {
                   ),
                   buildSizeHeight(height: 57),
                   buildTextFormField(
-                    controller: textEditingController,
+                    controller: controller.examCityController.value,
                     keyboardType: TextInputType.text,
                     hintText: '',
                     errorText: '',

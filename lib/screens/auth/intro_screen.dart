@@ -1,5 +1,6 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:scribetribe/screens/auth/choosing_screen.dart';
 import 'package:scribetribe/screens/auth/login_screen/login_screen.dart';
 
 class IntroScreen extends StatelessWidget {
@@ -15,6 +16,6 @@ class IntroScreen extends StatelessWidget {
           size: 500,
           color: Colors.white,
         ),
-        nextScreen: const LoginScreen());
+        nextScreen: const LoginScreen(), );
   }
 }

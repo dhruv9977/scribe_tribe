@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 
 import 'package:scribetribe/components/constants/colors.dart';
+import 'package:scribetribe/components/constants/route_helper.dart';
 import 'package:scribetribe/components/widgets/normal_text_widget.dart';
 import 'package:scribetribe/controllers/login_controller.dart';
 import 'package:sms_autofill/sms_autofill.dart';
@@ -16,178 +18,140 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final arguments = (ModalRoute.of(context)?.settings.arguments ??
-        <String, dynamic>{}) as Map;
-    String verificationId = arguments['verificationId'].toString();
-    LoginController controller = Get.find<LoginController>();
-    return SafeArea(
-      child: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Spacer(),
-            _buildText(
-              "Welcome back\nsmarika verma!",
-              AppColors.kPrimaryColor,
-              21.5,
-            ),
-            buildSizeHeight(height: 4),
-            Text(
-              "We have sent OTP via SMS to",
-              style: TextStyle(
-                fontSize: getProportionateScreenWidth(18),
-                color: const Color(0xff717171),
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            _buildRichText(controller),
-            buildSizeHeight(height: 20),
-            _buildPin(context, controller, verificationId),
-            buildSizeHeight(height: 20),
-            _buildBtn(context, controller),
-            buildSizeHeight(height: 16),
-            _buildText(
-              "You are already registred.\nPlease enter OTP to move ahed.",
-              const Color(0xff34A853),
-              13,
-            ),
-            const Spacer(),
-            _buildText(
-              "Didn’t receive OTP?",
-              const Color(0xff666666),
-              12,
-            ),
-            buildSizeHeight(height: 15),
-            _buildTimer(),
-            buildSizeHeight(height: 11),
-            _buildText(
-              "OR",
-              const Color(0xff717171),
-              12,
-            ),
-            buildSizeHeight(height: 11),
-            buildText(
-              text: "Verify using call",
-              color: AppColors.kPrimaryColor,
-              txtSize: 12,
-              fontWeight: FontWeight.w500,
-            ),
-            buildSizeHeight(height: 39),
-          ],
-        ),
+    return SingleChildScrollView(
+      child: Column(
+        // crossAxisAlignment: CrossAxisAlignment.start,
+        // mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: _buildImg(),
+          ),
+          buildText(
+            text: "Enter OTP",
+            color: Colors.black,
+            txtSize: 22,
+            fontWeight: FontWeight.w500,
+          ),
+          buildSizeHeight(height: 31),
+          _buildPin(context),
+          buildSizeHeight(height: 79),
+          _buildBtn(context),
+          buildSizeHeight(height: 20),
+          _buildResend()
+        ],
       ),
     );
   }
 
-  Widget _buildRichText(LoginController controller) {
+  Row _buildResend() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          controller.phoneController.value.text.trim(),
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: getProportionateScreenWidth(18),
-          ),
+        buildText(
+          text: "Didn’t receive OTP?",
+          color: Colors.black,
+          txtSize: 16,
+          fontWeight: FontWeight.w300,
         ),
-        Text(
-          " for verification",
-          style: TextStyle(
-            fontSize: getProportionateScreenWidth(18),
-            color: const Color(0xff717171),
-            fontWeight: FontWeight.w400,
+        InkWell(
+          onTap: () {},
+          child: buildText(
+            text: " Resend",
+            color: AppColors.kPrimaryColor,
+            txtSize: 16,
+            fontWeight: FontWeight.w300,
           ),
         ),
       ],
     );
   }
 
-  Padding _buildBtn(BuildContext context, LoginController controller) {
-    return Padding(
-      padding:
-          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-      child: RoundedButton(
-        text: "Verify",
-        btnColor: AppColors.kPrimaryColor,
-        width: double.infinity,
-        height: 41,
-        onPressed: () {},
-        fontSize: 12,
-      ),
-    );
-  }
-
-  Text _buildText(String text, Color color, double size) {
-    return Text(
-      text,
-      style: TextStyle(
-        fontSize: getProportionateScreenWidth(size),
-        color: color,
-        fontWeight: FontWeight.w500,
-      ),
-      textAlign: TextAlign.center,
-    );
-  }
-
-  Widget _buildPin(
-      BuildContext context, LoginController controller, String verificationId) {
+  Padding _buildImg() {
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: getProportionateScreenWidth(12),
+        vertical: getProportionateScreenHeight(8),
       ),
-      child: Obx(
-        () => PinFieldAutoFill(
-          controller: controller.otpController.value,
-          codeLength: 6,
-          autoFocus: true,
-          cursor: Cursor(
-            color: Colors.black45,
-            enabled: true,
-            width: 2,
-            height: 20,
-          ),
-          enableInteractiveSelection: true,
-          decoration: UnderlineDecoration(
-            lineHeight: 2,
-            lineStrokeCap: StrokeCap.butt,
-            bgColorBuilder: PinListenColorBuilder(
-              AppColors.kFillColor,
-              AppColors.kFillColor,
-            ),
-            colorBuilder: const FixedColorBuilder(AppColors.kFillColor),
-          ),
-          onCodeChanged: (p0) {
-            if (p0!.length == 6) {
-              controller.onOTPPressed(p0, context, verificationId);
-            }
-          },
-        ),
-      ),
+      child: Image.asset("assets/icons/sign_up_1.png"),
     );
   }
 
-  Row _buildTimer() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        TweenAnimationBuilder(
-          tween: Tween(
-            begin: 30.0,
-            end: 0.0,
+  Widget _buildBtn(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: getProportionateScreenWidth(25.5),
+      ),
+      child: GetBuilder<LoginController>(builder: (controller) {
+        return RoundedButton(
+          text: "Next",
+          btnColor: AppColors.kPrimaryColor,
+          width: SizeConfig.screenWidth,
+          height: 51,
+          onPressed: () {
+            controller.onOTPPressed(context);
+            // Get.offNamedUntil(
+            //   RouteHelper.detailsRoute,
+            //   (route) => false,
+            // );
+            
+          },
+        );
+      }),
+    );
+  }
+
+  GetBuilder<LoginController> _buildPin(BuildContext context) {
+    return GetBuilder<LoginController>(
+      builder: (controller) {
+        return Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: getProportionateScreenWidth(12),
           ),
-          duration: const Duration(
-            seconds: 30,
-          ),
-          builder: (_, double value, child) => Text(
-            "Retry in ${value.toInt()} sec",
-            style: TextStyle(
-              color: const Color(0xffD9D9D9),
-              fontSize: getProportionateScreenWidth(12),
-              fontWeight: FontWeight.w500,
+          child: PinCodeTextField(
+            appContext: context,
+            length: 6,
+            obscureText: false,
+            animationType: AnimationType.fade,
+            enablePinAutofill: true,
+            pinTheme: PinTheme(
+              borderWidth: 1,
+              // activeColor: Colors.transparent,
+              selectedFillColor: Colors.transparent,
+
+              shape: PinCodeFieldShape.box,
+              inactiveFillColor: Colors.transparent,
+              borderRadius: BorderRadius.circular(14),
+              fieldHeight: getProportionateScreenWidth(53),
+              fieldWidth: getProportionateScreenWidth(53),
+              selectedColor: Colors.black,
+              disabledColor: Colors.grey,
+              inactiveColor: Colors.grey,
+              activeColor: AppColors.kPrimaryColor,
+              activeFillColor: Colors.white,
             ),
+            keyboardType: TextInputType.number,
+            animationDuration: const Duration(milliseconds: 300),
+            // backgroundColor: Colors.blue.shade50,
+            enableActiveFill: true,
+            // errorAnimationController: errorController,
+            controller: controller.otpController.value,
+            onCompleted: (v) {
+              print("Completed");
+            },
+            onChanged: (value) {
+              // print(value);
+              // setState(() {
+              //   currentText = value;
+              // });
+            },
+            beforeTextPaste: (text) {
+              print("Allowing to paste $text");
+              //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
+              //but you can show anything you want here, like your pop up saying wrong paste format or etc
+              return true;
+            },
           ),
-        ),
-      ],
+        );
+      },
     );
   }
 }

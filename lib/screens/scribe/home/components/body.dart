@@ -46,7 +46,7 @@ class Body extends StatelessWidget {
   Expanded _buildListView() {
     return Expanded(
       child: ListView.builder(
-        itemCount: 10,
+        itemCount: 1,
         itemBuilder: (context, index) {
           return _buildCard();
         },

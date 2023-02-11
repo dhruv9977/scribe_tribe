@@ -23,8 +23,7 @@ class _NameScreenState extends State<NameScreen> {
   late stt.SpeechToText _speech;
   // bool _isListening = false;
   double _confidence = 1.0;
-    final controller = Get.find<StudentDetailsController>();
-
+  final controller = Get.find<StudentDetailsController>();
 
   @override
   void initState() {
@@ -49,17 +48,20 @@ class _NameScreenState extends State<NameScreen> {
     await _speech.initialize();
 
     await _speech.listen(
-      onResult: (val) => setState(() {
-        controller.nameController.value.text = val.recognizedWords;
-        if (val.hasConfidenceRating && val.confidence > 0) {
-          _confidence = val.confidence;
-        }
-      }),
+      onResult: (val) => setState(
+        () async {
+          controller.nameController.value.text = val.recognizedWords;
+          if (controller.nameController.value.text.isNotEmpty) {
+            _confidence = val.confidence;
+          }
+        },
+      ),
     );
   }
 
   void _stopListener() async {
     await _speech.stop();
+    // verification
   }
 
   @override
@@ -74,7 +76,7 @@ class _NameScreenState extends State<NameScreen> {
           _speech.isNotListening ? _listen() : _stopListener();
         },
         child: Scaffold(
-          body: SafeArea(
+          body: SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.symmetric(
                   horizontal: getProportionateScreenWidth(26)),
@@ -92,10 +94,11 @@ class _NameScreenState extends State<NameScreen> {
                   ),
                   buildSizeHeight(height: 57),
                   buildTextFormField(
+                    // formKey: controller.formKey,
                     controller: controller.nameController.value,
                     keyboardType: TextInputType.text,
-                    hintText: '',
-                    errorText: '',
+                    hintText: 'Enter the name',
+                    errorText: 'Please enter the name',
                     isSuffixIconVisible: true,
                     suffixIcon:
                         _speech.isNotListening ? Icons.mic_none : Icons.mic,

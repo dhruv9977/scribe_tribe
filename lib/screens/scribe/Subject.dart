@@ -9,6 +9,7 @@ import '../../../../components/widgets/app_name_widgets.dart';
 import '../../../../components/widgets/normal_text_widget.dart';
 import '../../../components/widgets/rounded_buttons.dart';
 import '../../../components/widgets/text_form_field.dart';
+import '../../controllers/studen_exam_details.dart';
 
 class Subject extends StatefulWidget {
   const Subject({Key? key}) : super(key: key);
@@ -19,10 +20,10 @@ class Subject extends StatefulWidget {
 
 class _SubjectState extends State<Subject> {
   final FlutterTts flutterTts = FlutterTts();
-  final TextEditingController textEditingController = TextEditingController();
   late stt.SpeechToText _speech;
   // bool _isListening = false;
   double _confidence = 1.0;
+  final controller = Get.find<StudentExamDetailsController>();
 
   @override
   void initState() {
@@ -48,7 +49,7 @@ class _SubjectState extends State<Subject> {
 
     await _speech.listen(
       onResult: (val) => setState(() {
-        textEditingController.text = val.recognizedWords;
+        controller.subjectNameController.value.text = val.recognizedWords;
         if (val.hasConfidenceRating && val.confidence > 0) {
           _confidence = val.confidence;
         }
@@ -90,7 +91,7 @@ class _SubjectState extends State<Subject> {
                   ),
                   buildSizeHeight(height: 57),
                   buildTextFormField(
-                    controller: textEditingController,
+                    controller: controller.subjectNameController.value,
                     keyboardType: TextInputType.text,
                     hintText: '',
                     errorText: '',
@@ -103,13 +104,14 @@ class _SubjectState extends State<Subject> {
                   ),
                   buildSizeHeight(height: 65),
                   RoundedButton(
-                      text: "Next",
-                      btnColor: AppColors.kPrimaryColor,
-                      width: double.infinity,
-                      height: 51,
-                      onPressed: () {
-                        Get.toNamed(RouteHelper.getStudentLanguageScreen());
-                      }),
+                    text: "Next",
+                    btnColor: AppColors.kPrimaryColor,
+                    width: double.infinity,
+                    height: 51,
+                    onPressed: () {
+                      Get.toNamed(RouteHelper.getStudentDateScreen());
+                    },
+                  ),
                 ],
               ),
             ),

@@ -127,9 +127,9 @@ class FirebaseAuthProvider implements AuthProvider {
       // controller.isVerify.value = true;
       // controller.authId.value = user!.uid;
       //routing
-      await Get.offNamed(
-        RouteHelper.getSplashRoute(),
-      );
+      // await Get.offNamed(
+      // RouteHelper.getSplashRoute(),
+      // );
 
       progressDialog(context: context, isLoading: false);
     } catch (e) {

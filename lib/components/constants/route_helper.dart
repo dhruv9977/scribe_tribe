@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:scribetribe/screens/auth/choosing_screen.dart';
+import 'package:scribetribe/screens/auth/intro_screen.dart';
 import 'package:scribetribe/screens/auth/login_screen/login_screen.dart';
 import 'package:scribetribe/screens/scribe/AgeScreen.dart';
 import 'package:scribetribe/screens/scribe/Date.dart';
@@ -9,8 +10,12 @@ import 'package:scribetribe/screens/scribe/ExamCity.dart';
 import 'package:scribetribe/screens/scribe/ExamType.dart';
 import 'package:scribetribe/screens/scribe/Subject.dart';
 import 'package:scribetribe/screens/scribe/Time.dart';
+import 'package:scribetribe/screens/scribe/city_screen.dart';
 import 'package:scribetribe/screens/scribe/home/home_screen.dart';
 import 'package:scribetribe/screens/scribe/language.dart';
+import 'package:scribetribe/screens/scribe/pin_code_screen.dart';
+import 'package:scribetribe/screens/scribe/state_screen.dart';
+import 'package:scribetribe/screens/scribe/venue_name.dart';
 import 'package:scribetribe/screens/tribe/home_screen/home_screen.dart';
 import 'package:scribetribe/screens/tribe/registration_successful/reg_successful.dart';
 import 'package:scribetribe/screens/tribe/select_language/select_language.dart';
@@ -20,6 +25,8 @@ import 'package:scribetribe/screens/tribe/userProfile.dart';
 import '../../main.dart';
 import '../../screens/auth/otp_screen/otp_screen.dart';
 import '../../screens/scribe/NameScreen.dart';
+import '../../screens/scribe/address_screen.dart';
+import '../../screens/scribe/gender_screen.dart';
 
 class RouteHelper {
   //initial
@@ -28,6 +35,7 @@ class RouteHelper {
   static const String splashRoute = "/splash/";
   static const String loginRoute = '/login/';
   static const String otpRoute = '/otp/';
+  static const String choosingRoute = '/choose/';
   //writer
   static const String detailsRoute = '/registration/';
   static const String selectLanguageRoute = '/selectLanguage/';
@@ -37,6 +45,11 @@ class RouteHelper {
   //student
   static const String studentsNameScreen = '/stdNameScreen/';
   static const String studentsAgeScreen = '/stdAgeScreen/';
+  static const String studentsGenderScreen = '/stdGenderScreen/';
+  static const String studentsCityScreen = '/stdCityScreen/';
+  static const String studentsStateScreen = '/stdStateScreen/';
+  static const String studentsAddressScreen = '/stdAddressScreen/';
+  static const String studentsPinCodeScreen = '/stdPinCodeScreen/';
   static const String studentsExamScreen = '/stdExamScreen/';
   static const String studentsSubjectScreen = '/stdSubScreen/';
   static const String studentsLanguageScreen = '/stdLangScreen/';
@@ -45,12 +58,13 @@ class RouteHelper {
   static const String studentsDurationScreen = '/stdDurScreen/';
   static const String studentsExamCityScreen = '/stdExamCityScreen/';
   static const String studentsExamAreaScreen = '/stdExamAreaScreen/';
+  static const String studentsExamVenueScreen = '/stdExamVenueScreen/';
   static const String studentsHomeRoute = '/stdHome/';
 
   //getters
-  static String getSplashRoute() => splashRoute;
   static String getLoginScreen() => loginRoute;
   static String getUserOtpScreen() => otpRoute;
+  static String getChooseScreen() => choosingRoute;
   static String getRegistrationScreen() => detailsRoute;
   static String getLanguageScreen() => selectLanguageRoute;
   static String getRegSuccScreen() => regSucessfulRoute;
@@ -58,6 +72,11 @@ class RouteHelper {
   static String getDetailScreen() => detailRoute;
   static String getStudentNameScreen() => studentsNameScreen;
   static String getStudentAgeScreen() => studentsAgeScreen;
+  static String getStudentCityScreen() => studentsCityScreen;
+  static String getStudentStateScreen() => studentsStateScreen;
+  static String getStudentAddressScreen() => studentsAddressScreen;
+  static String getStudentPinCodeScreen() => studentsPinCodeScreen;
+  static String getStudentGenderScreen() => studentsGenderScreen;
   static String getStudentExamScreen() => studentsExamScreen;
   static String getStudentSubjectScreen() => studentsSubjectScreen;
   static String getStudentLanguageScreen() => studentsLanguageScreen;
@@ -66,6 +85,7 @@ class RouteHelper {
   static String getStudentDurationScreen() => studentsDurationScreen;
   static String getStudentExamCityScreen() => studentsExamCityScreen;
   static String getStudentExamAreaScreen() => studentsExamAreaScreen;
+  static String getStudentExamVenueScreen() => studentsExamVenueScreen;
   static String getStudentHomeScreen() => studentsHomeRoute;
 
   // lists
@@ -73,13 +93,7 @@ class RouteHelper {
     GetPage(
       name: initial,
       page: () {
-        return const MainScreen();
-      },
-    ),
-    GetPage(
-      name: splashRoute,
-      page: () {
-        return const ChoosingScreen();
+        return const IntroScreen();
       },
     ),
     GetPage(
@@ -92,6 +106,12 @@ class RouteHelper {
       name: otpRoute,
       page: () {
         return const UserOTPScreen();
+      },
+    ),
+    GetPage(
+      name: choosingRoute,
+      page: () {
+        return const ChoosingScreen();
       },
     ),
     GetPage(
@@ -137,6 +157,42 @@ class RouteHelper {
       },
     ),
     GetPage(
+      name: studentsGenderScreen,
+      page: () {
+        return const GenderScreen();
+      },
+    ),
+    GetPage(
+      name: studentsAddressScreen,
+      page: () {
+        return const AddressScreen();
+      },
+    ),
+    GetPage(
+      name: studentsLanguageScreen,
+      page: () {
+        return const Language();
+      },
+    ),
+    GetPage(
+      name: studentsCityScreen,
+      page: () {
+        return const CityScreen();
+      },
+    ),
+    GetPage(
+      name: studentsStateScreen,
+      page: () {
+        return const StateScreen();
+      },
+    ),
+    GetPage(
+      name: studentsPinCodeScreen,
+      page: () {
+        return const PinCodeScreen();
+      },
+    ),
+    GetPage(
       name: studentsExamScreen,
       page: () {
         return const ExamType();
@@ -146,12 +202,6 @@ class RouteHelper {
       name: studentsSubjectScreen,
       page: () {
         return const Subject();
-      },
-    ),
-    GetPage(
-      name: studentsLanguageScreen,
-      page: () {
-        return const Language();
       },
     ),
     GetPage(
@@ -182,6 +232,12 @@ class RouteHelper {
       name: studentsExamAreaScreen,
       page: () {
         return const ExamArea();
+      },
+    ),
+    GetPage(
+      name: studentsExamVenueScreen,
+      page: () {
+        return const VenueName();
       },
     ),
     GetPage(

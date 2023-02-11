@@ -5,20 +5,29 @@ import 'package:scribetribe/controllers/login_controller.dart';
 
 import 'package:scribetribe/data/repository/student_details_repo.dart';
 import 'package:scribetribe/models/students_details_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class StudentDetailsController extends GetxController {
-  final controller = Get.find<LoginController>();
+import '../components/constants/route_helper.dart';
+import '../components/constants/urls.dart';
+import '../components/widgets/show_error_dialog.dart';
+
+class StudentDetailsController extends GetxController implements GetxService {
+  final formKey = GlobalKey<FormState>();
+
+  // final controller = Get.find<LoginController>();
   late String number;
   final nameController = TextEditingController().obs;
   final ageController = TextEditingController().obs;
-  final examNameController = TextEditingController().obs;
-  final subjectNameController = TextEditingController().obs;
-  final examLanguageController = TextEditingController().obs;
-  final examDateController = TextEditingController().obs;
-  final examTimeController = TextEditingController().obs;
-  final examDurationController = TextEditingController().obs;
-  final examCityController = TextEditingController().obs;
-  final examAreaController = TextEditingController().obs;
+  final genderController = TextEditingController().obs;
+  final languageController = TextEditingController().obs;
+  final cityController = TextEditingController().obs;
+  final stateController = TextEditingController().obs;
+  final pinCodeController = TextEditingController().obs;
+  final addressController = TextEditingController().obs;
+
+// final education = languageController.value.text.trim().toLowerCase() == "english"
+//               ? "ENG184"
+//               : "";
   final commuteController = TextEditingController().obs;
 
   final StudentsDetailsRepository studentsDetailsRepository;
@@ -26,16 +35,40 @@ class StudentDetailsController extends GetxController {
     required this.studentsDetailsRepository,
   });
 
-  createCandidate() async {
-    StudentsDetailsModels studentsDetailsModels = StudentsDetailsModels(
-      name: nameController.value.text, 
-    );
+  createCandidate(BuildContext context) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
-    Response response = await studentsDetailsRepository.createCandidate(studentsDetailsModels);
+    try {
+      StudentDetailsModel studentsDetailsModels = StudentDetailsModel(
+        name: nameController.value.text.trim(),
+        age: ageController.value.text.trim(),
+        gender: genderController.value.text.trim(),
+        education: ["ENG184"],
+        city: cityController.value.text.trim(),
+        state: stateController.value.text.trim(),
+        address: addressController.value.text.trim(),
+        // "${cityController.value.text.trim()}, ${stateController.value.text.trim()}, ${pinCodeController.value.text.trim()}",
+        pincode: pinCodeController.value.text.trim(),
+        proof: '',
+        phone: sharedPreferences.getString(UrlConstants.phoneNumber),
+      );
+      Response response = await studentsDetailsRepository
+          .createCandidate(studentsDetailsModels);
 
-    if (response.statusCode == 201) {
-      // navigation
-    } else {}
+      if (response.statusCode == 200) {
+        Get.offNamedUntil(
+          RouteHelper.getStudentHomeScreen(),
+          (route) => false,
+        );
+      } else {
+        showErrorDialog(context, response.statusText.toString());
+
+        print(response.statusCode.toString());
+        print(response.statusText);
+      }
+    } on Exception catch (e) {
+      showErrorDialog(context, e.toString());
+    }
 
     update();
   }

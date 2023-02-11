@@ -43,7 +43,6 @@ List checkListItems = [
 class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
-
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: getProportionateScreenWidth(26),
@@ -97,18 +96,21 @@ class _BodyState extends State<Body> {
           //   // suffixIcon: Icons.arrow_drop_down,
           //   // onIconPressed: () {},
           // ),
-          const Spacer(),
-          RoundedButton(
-            text: "Next",
-            btnColor: AppColors.kPrimaryColor,
-            width: double.infinity,
-            height: 51,
-            onPressed: () {
-              // if (controller.formKey.currentState!.validate()) {
-              Get.offNamedUntil(RouteHelper.getHomeScreen(), (route) => false);
-              // }
-            },
-          ),
+          // const Spacer(),
+          GetBuilder(builder: (context) {
+            return RoundedButton(
+              text: "Next",
+              btnColor: AppColors.kPrimaryColor,
+              width: double.infinity,
+              height: 51,
+              onPressed: () {
+                // if (controller.formKey.currentState!.validate()) {
+                Get.offNamedUntil(
+                    RouteHelper.getHomeScreen(), (route) => false);
+                // }
+              },
+            );
+          }),
           const Spacer(),
         ],
       ),

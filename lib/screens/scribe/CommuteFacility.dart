@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:scribetribe/components/constants/size_config.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:scribetribe/components/widgets/text_form_field.dart';
@@ -7,6 +8,7 @@ import '../../../../components/constants/colors.dart';
 import '../../../../components/widgets/app_name_widgets.dart';
 import '../../../../components/widgets/normal_text_widget.dart';
 import '../../../components/widgets/rounded_buttons.dart';
+import '../../controllers/studet_details_controller.dart';
 
 class CommuteFacilities extends StatefulWidget {
   const CommuteFacilities({Key? key}) : super(key: key);
@@ -22,6 +24,8 @@ class _CommuteFacilitiesState extends State<CommuteFacilities> {
   late stt.SpeechToText _speech;
   bool _isListening = false;
   double _confidence = 1.0;
+  final controller = Get.find<StudentDetailsController>();
+
 
   @override
   void initState() {

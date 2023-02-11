@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scribetribe/components/constants/size_config.dart';
 import 'package:scribetribe/controllers/tribe_home_screen_controller.dart';
-
 import 'components/body.dart';
 
 class HomeScreen extends StatelessWidget {

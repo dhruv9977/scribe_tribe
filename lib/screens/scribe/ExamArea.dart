@@ -9,6 +9,7 @@ import '../../../../components/constants/colors.dart';
 import '../../../../components/widgets/app_name_widgets.dart';
 import '../../../../components/widgets/normal_text_widget.dart';
 import '../../../components/widgets/rounded_buttons.dart';
+import '../../controllers/studen_exam_details.dart';
 
 class ExamArea extends StatefulWidget {
   const ExamArea({Key? key}) : super(key: key);
@@ -19,10 +20,11 @@ class ExamArea extends StatefulWidget {
 
 class _ExamAreaState extends State<ExamArea> {
   final FlutterTts flutterTts = FlutterTts();
-  final TextEditingController textEditingController = TextEditingController();
+  // final TextEditingController textEditingController = TextEditingController();
   late stt.SpeechToText _speech;
   // bool _isListening = false;
   double _confidence = 1.0;
+  final controller = Get.find<StudentExamDetailsController>();
 
   @override
   void initState() {
@@ -36,7 +38,7 @@ class _ExamAreaState extends State<ExamArea> {
     await flutterTts.setVolume(1.0);
     await flutterTts.setPitch(0.4);
     await flutterTts.speak(
-      "Please Tell us your exam venue",
+      "Please Tell us your exam venue address",
     );
     await flutterTts.awaitSpeakCompletion(true);
     await flutterTts.stop();
@@ -48,7 +50,7 @@ class _ExamAreaState extends State<ExamArea> {
 
     await _speech.listen(
       onResult: (val) => setState(() {
-        textEditingController.text = val.recognizedWords;
+        controller.examAreaController.value.text = val.recognizedWords;
         if (val.hasConfidenceRating && val.confidence > 0) {
           _confidence = val.confidence;
         }
@@ -83,14 +85,14 @@ class _ExamAreaState extends State<ExamArea> {
                   Center(child: appNameWidget()),
                   buildSizeHeight(height: 147),
                   buildText(
-                    text: 'Enter Exam Venue',
+                    text: 'Enter Exam Venue Address',
                     color: Colors.black,
                     txtSize: 24,
                     fontWeight: FontWeight.w700,
                   ),
                   buildSizeHeight(height: 57),
                   buildTextFormField(
-                    controller: textEditingController,
+                    controller: controller.examAreaController.value,
                     keyboardType: TextInputType.text,
                     hintText: '',
                     errorText: '',
@@ -108,7 +110,8 @@ class _ExamAreaState extends State<ExamArea> {
                       width: double.infinity,
                       height: 51,
                       onPressed: () {
-                        Get.offNamedUntil(RouteHelper.getStudentHomeScreen(),
+                        Get.offNamedUntil(
+                            RouteHelper.getStudentExamVenueScreen(),
                             (route) => false);
                       }),
                 ],

@@ -15,7 +15,6 @@ Widget buildTextFormField({
   return SizedBox(
     // height: getProportionateScreenHeight(64),
     child: TextFormField(
-      
       autovalidateMode: AutovalidateMode.onUserInteraction,
       controller: controller,
       keyboardType: keyboardType,

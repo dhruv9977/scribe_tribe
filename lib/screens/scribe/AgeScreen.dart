@@ -9,6 +9,7 @@ import '../../../../components/widgets/app_name_widgets.dart';
 import '../../../../components/widgets/normal_text_widget.dart';
 import '../../../components/widgets/rounded_buttons.dart';
 import '../../../components/widgets/text_form_field.dart';
+import '../../controllers/studet_details_controller.dart';
 
 class AgeScreen extends StatefulWidget {
   const AgeScreen({Key? key}) : super(key: key);
@@ -23,6 +24,7 @@ class _AgeScreenState extends State<AgeScreen> {
   late stt.SpeechToText _speech;
   // bool _isListening = false;
   double _confidence = 1.0;
+  final controller = Get.find<StudentDetailsController>();
 
   @override
   void initState() {
@@ -48,7 +50,7 @@ class _AgeScreenState extends State<AgeScreen> {
 
     await _speech.listen(
       onResult: (val) => setState(() {
-        textEditingController.text = val.recognizedWords;
+        controller.ageController.value.text = val.recognizedWords;
         if (val.hasConfidenceRating && val.confidence > 0) {
           _confidence = val.confidence;
         }
@@ -72,48 +74,50 @@ class _AgeScreenState extends State<AgeScreen> {
           _speech.isNotListening ? _listen() : _stopListener();
         },
         child: Scaffold(
-          body: SafeArea(
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: getProportionateScreenWidth(26)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  appNameWidget(),
-                  buildSizeHeight(height: 147),
-                  buildText(
-                    text: 'What is your age?',
-                    color: Colors.black,
-                    txtSize: 24,
-                    fontWeight: FontWeight.w700,
-                  ),
-                  buildSizeHeight(height: 57),
-                  buildTextFormField(
-                    controller: textEditingController,
-                    keyboardType: TextInputType.number,
-                    hintText: '',
-                    errorText: '',
-                    isSuffixIconVisible: true,
-                    suffixIcon:
-                        _speech.isNotListening ? Icons.mic_none : Icons.mic,
-                    onIconPressed: () {
-                      _speech.isNotListening ? _listen() : _stopListener();
-                    },
-                  ),
-                  buildSizeHeight(height: 65),
-                  RoundedButton(
-                    text: "Next",
-                    btnColor: AppColors.kPrimaryColor,
-                    width: double.infinity,
-                    height: 51,
-                    onPressed: () {
-                      Get.toNamed(
-                        RouteHelper.getStudentExamScreen(),
-                      );
-                    },
-                  ),
-                ],
+          body: SingleChildScrollView(
+            child: SafeArea(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: getProportionateScreenWidth(26)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    appNameWidget(),
+                    buildSizeHeight(height: 147),
+                    buildText(
+                      text: 'What is your age?',
+                      color: Colors.black,
+                      txtSize: 24,
+                      fontWeight: FontWeight.w700,
+                    ),
+                    buildSizeHeight(height: 57),
+                    buildTextFormField(
+                      controller: controller.ageController.value,
+                      keyboardType: TextInputType.number,
+                      hintText: 'Enter the age',
+                      errorText: 'Please enter the age',
+                      isSuffixIconVisible: true,
+                      suffixIcon:
+                          _speech.isNotListening ? Icons.mic_none : Icons.mic,
+                      onIconPressed: () {
+                        _speech.isNotListening ? _listen() : _stopListener();
+                      },
+                    ),
+                    buildSizeHeight(height: 65),
+                    RoundedButton(
+                      text: "Next",
+                      btnColor: AppColors.kPrimaryColor,
+                      width: double.infinity,
+                      height: 51,
+                      onPressed: () {
+                        Get.toNamed(
+                          RouteHelper.getStudentGenderScreen(),
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
